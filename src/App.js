@@ -8,7 +8,7 @@ import SearchField from "./components/SearchField"
 
 export default function App() {
 
-  const trendingUrl=`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}`
+  const trendingUrl=`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}&limitToFirst=5`
 
   const [loading, setLoading]= useState(true)
   const [gifs,setGifs]=useState([])
@@ -22,6 +22,7 @@ export default function App() {
       setGifs(data)
       setLoading(false)
       console.log(gifs.data[0].url)
+      //https://giphy.com/embed/aFFQ894LujNBXZY6C0
     } catch(error){
       console.log(error)
     }
@@ -29,7 +30,7 @@ export default function App() {
 
   useEffect(() => {
     fetchGif();
-  }, [gifs])
+  }, [])
 
   const onChange = (e) =>{
     setSearchText(e.target.value)
@@ -38,7 +39,7 @@ export default function App() {
   return (
     <div className="App">
       <header className='homeGIFs'>
-        {loading===false ? gifs.img:<p>Loading</p>}
+        {loading===false ? <img href="gifs.data[0].url"></img>:<p>Loading</p>}
       </header>
       <SearchField onChange={onChange} />
     </div>
