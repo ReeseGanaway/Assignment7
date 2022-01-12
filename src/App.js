@@ -8,28 +8,29 @@ import SearchField from "./components/SearchField"
 
 export default function App() {
 
-  const trendingUrl=`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}&limitToFirst=5`
+  const trendingUrl=`http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}`
 
   const [loading, setLoading]= useState(true)
   const [gifs,setGifs]=useState([])
   const [searchText,setSearchText] = useState("")
   
 
-  const fetchGif= async () =>{
+ const fetchGif= async()=> {
     try{
       const response= await fetch(trendingUrl);
-      const data= await response.json()
-      setGifs(data)
+      const trendingData= await response.json()
+      setGifs(trendingData.data)
       setLoading(false)
-      console.log(gifs.data[0].url)
-      //https://giphy.com/embed/aFFQ894LujNBXZY6C0
     } catch(error){
       console.log(error)
     }
   }
 
-  useEffect(() => {
+  
+
+  useEffect( () => {
     fetchGif();
+    console.log(gifs[0].images)
   }, [])
 
   const onChange = (e) =>{
@@ -38,10 +39,13 @@ export default function App() {
   
   return (
     <div className="App">
-      <header className='homeGIFs'>
-        {loading===false ? <img href="gifs.data[0].url"></img>:<p>Loading</p>}
-      </header>
-      <SearchField onChange={onChange} />
+      <h1 className='Trending-GIFs'>Trending!
+      <div className="Gif-Box">
+      {gifs.map((x)=>(
+         <GifCard padding="100px" url={x.images.original.url}/>))}
+      </div>
+      </h1>
+      <SearchField onChange={onChange}/>
     </div>
   );
 }
