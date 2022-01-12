@@ -4,10 +4,10 @@ export default function SearchField(props){
 
 
     return(
-        <div>
+        <div className='SearchField'>
             <form>
-            <label>Search</label>
-            <input type="text" id="search" >
+            <label className="SearchLabel">Search</label>
+            <input className='SearchBox' onChange={props.onChange} type="text" id="search" >
             </input>
             </form>
         </div>
